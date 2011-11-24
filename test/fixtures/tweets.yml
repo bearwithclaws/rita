@@ -1,0 +1,9 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/Fixtures.html
+
+one:
+  curator: MyString
+  url: MyString
+
+two:
+  curator: MyString
+  url: MyString
