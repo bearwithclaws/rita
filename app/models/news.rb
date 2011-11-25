@@ -4,15 +4,18 @@ class News < ActiveRecord::Base
     agent = Mechanize.new
     tweets.each do |t|
       begin
-        redirected_url = agent.get(t.url).uri.to_s
-        existing_news = self.where(:url => redirected_url).first
-        if existing_news
-          vote_count = existing_news[:votes] + 1
-          existing_news.update_attributes(:votes => vote_count)
-        else
-          self.create(:url => redirected_url, :votes => 1)
+        page = agent.get(t.url)
+        unless page.class == Mechanize::File
+          redirected_url = page.uri.to_s
+          existing_news = self.where(:url => redirected_url).first
+          if existing_news
+            vote_count = existing_news[:votes] + 1
+            existing_news.update_attributes(:votes => vote_count)
+          else
+            self.create(:url => redirected_url, :votes => 1, :title => page.title.to_s)
+          end
+          t.update_attributes(:news_id => self.id)
         end
-        t.update_attributes(:news_id => self[:id])
       rescue Mechanize::ResponseCodeError
         puts $!.response_code
       end

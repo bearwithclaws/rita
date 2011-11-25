@@ -7,8 +7,12 @@
   <%= csrf_meta_tags %>
 </head>
 <body>
-
+<div id="header">
+<%= image_tag("logo.png", :id => "logo") %>
+<p class="tagline">curated real-time social news</p>
+</div>
+<div class="container">
 <%= yield %>
-
+</div>
 </body>
 </html>
