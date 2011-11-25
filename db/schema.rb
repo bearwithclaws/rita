@@ -10,7 +10,14 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20111124075959) do
+ActiveRecord::Schema.define(:version => 20111125063028) do
+
+  create_table "news", :force => true do |t|
+    t.string   "url"
+    t.integer  "votes"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
 
   create_table "tweets", :force => true do |t|
     t.string   "curator"
@@ -18,6 +25,7 @@ ActiveRecord::Schema.define(:version => 20111124075959) do
     t.integer  "twit_id"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.integer  "news_id"
   end
 
 end

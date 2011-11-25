@@ -2,18 +2,10 @@ class Tweet < ActiveRecord::Base
   
   def self.fetch_tweet(curator)
     tweet = Twitter.user_timeline(curator)
-    agent = Mechanize.new
     tweet.each do |t|
-      unless self.where(:twit_id => t.id).exists?
-        unless t.urls.empty?
-          begin
-            redirected_url = agent.get(t.urls.first).uri.to_s
-            self.create(:twit_id => t.id, :url => redirected_url, :curator => curator)
-          rescue Mechanize::ResponseCodeError
-            puts $!.response_code
-          end
-        end
-      end
+      self.create(:twit_id => t.id, 
+                  :url => t.urls.first, 
+                  :curator => curator) unless self.where(:twit_id => t.id).exists? || t.urls.empty?
     end
   end
   
