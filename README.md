@@ -25,4 +25,10 @@ Done! Run the app to see it.
     
     $ rails server
     
+## Upcoming Version
 
+ - categorization
+ - production server deployment 
+ - admin area (active admin)
+ - live update news (cron, socket io, juggernaut)
+ - display who tweeted the news
